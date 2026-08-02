@@ -16,5 +16,13 @@ pipeline {
                 sh 'docker images | grep two-tier-app'
             }
         }
+        stage('Deploy') {
+            steps {
+                withCredentials([file(credentialsId: 'two-tier-env', variable: 'ENV_FILE')]) {
+                    sh 'cp $ENV_FILE .env'
+                    sh 'docker compose up -d --build'
+                }
+            }
+        }
     }
 }
