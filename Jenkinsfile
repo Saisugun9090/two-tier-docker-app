@@ -17,12 +17,13 @@ pipeline {
             }
         }
         stage('Deploy') {
-            steps {
-                withCredentials([file(credentialsId: 'two-tier-env', variable: 'ENV_FILE')]) {
-                    sh 'cp $ENV_FILE .env'
-                    sh 'docker compose up -d --build'
-                }
-            }
+    steps {
+        withCredentials([file(credentialsId: 'two-tier-env', variable: 'ENV_FILE')]) {
+            sh 'rm -f .env'
+            sh 'cp $ENV_FILE .env'
+            sh 'docker compose up -d --build'
         }
+    }
+}
     }
 }
