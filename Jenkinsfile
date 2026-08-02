@@ -6,9 +6,14 @@ pipeline {
                 echo 'Code checked out successfully'
             }
         }
-        stage('Verify') {
+        stage('Build Image') {
             steps {
-                echo 'Pipeline mechanics are working'
+                sh 'docker build -t two-tier-app:jenkins .'
+            }
+        }
+        stage('Verify Image') {
+            steps {
+                sh 'docker images | grep two-tier-app'
             }
         }
     }
